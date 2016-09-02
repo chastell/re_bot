@@ -7,10 +7,6 @@ class FacebookPost
     @posted_at = Time.parse(@post["created_time"])
   end
 
-  def self.get_posts(graph)
-    graph.get_connection(*self::CONNECTION_DATA)
-  end
-
   private
 
   def select_fresh_post

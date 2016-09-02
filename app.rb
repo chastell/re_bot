@@ -18,14 +18,14 @@ before do
 end
 
 get '/fb/u_dziewczyn' do
-  collect_feed { LunchPost.get_posts(@graph) }
+  collect_feed { @feed = @graph.get_connection(*LunchPost::CONNECTION_DATA) }
   lunch_post = LunchPost.new(@feed)
   halt "Nie ma jeszcze lunchu na dziś. Zwykle pojawia się koło godziny 11:00-11:15." if lunch_post.is_not_updated?
   lunch_post.as_json
 end
 
 get '/fb/wod' do
-  collect_feed { WodPost.get_posts(@graph) }
+  collect_feed { @feed = @graph.get_connection(*WodPost::CONNECTION_DATA) }
   WodPost.new(@feed).as_json
 end
 
@@ -41,7 +41,7 @@ end
 
 def collect_feed
   begin
-    @feed = yield
+    yield
   rescue Koala::Facebook::AuthenticationError
     halt 401, "Token do FB wygasł. Czas zaktualizować!"
   end
