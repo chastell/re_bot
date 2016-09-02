@@ -30,8 +30,13 @@ get '/fb/wod' do
 end
 
 get '/megadex' do
+  begin
+    megadex_response = NetConnector.get_data(MegadexMenu::MEGADEX_URL)
+  rescue => e
+    halt 418, e.message || "I'm a teapot"
+  end
   day = (!params[:text] || params[:text].empty?) ? Time.now.wday : params[:text].to_i
-  MegadexMenu.new.for_day(day)
+  MegadexMenu.new(megadex_response).for_day(day)
 end
 
 def collect_feed

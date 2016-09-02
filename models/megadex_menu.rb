@@ -11,8 +11,7 @@ class MegadexMenu
 
   MEGADEX_URL = URI('http://www.galeriasmaku.com.pl/zoliborz/admin/get.php')
 
-  def initialize
-    megadex_response = NetConnector.get_data(MEGADEX_URL)
+  def initialize(megadex_response)
     @menu = prepare_hash(megadex_response)
     @menu.delete("tydzien")
   end
