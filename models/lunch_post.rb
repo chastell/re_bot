@@ -1,4 +1,6 @@
 class LunchPost < FacebookPost
+  CONNECTION_DATA = ["udziewczynrestauracja", "posts", fields: "message,full_picture,created_time"]
+
   def as_json
     JSON({text: post_text, attachments: [{text: extra_message, attachments: {image_url: post_photo}}]})
   end
@@ -11,10 +13,6 @@ class LunchPost < FacebookPost
 
   def post_photo
     post["full_picture"]
-  end
-
-  def connection_data
-    ["udziewczynrestauracja", "posts", fields: "message,full_picture,created_time"]
   end
 
   def post_subject_indicators

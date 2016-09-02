@@ -1,10 +1,14 @@
 class FacebookPost
   attr_reader :posted_at, :response_parts, :post
 
-  def initialize
-    @posts = FacebookConnector.get_posts(connection_data)
+  def initialize(posts)
+    @posts = posts
     @post = select_fresh_post
     @posted_at = Time.parse(@post["created_time"])
+  end
+
+  def self.get_posts(graph)
+    graph.get_connection(*self::CONNECTION_DATA)
   end
 
   private
