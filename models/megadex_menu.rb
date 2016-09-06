@@ -16,7 +16,7 @@ class MegadexMenu
     @menu.delete("tydzien")
   end
 
-  def for_day(day=nil)
+  def for_day(day)
     day = DAYS[day]
     menu = get_menu[day].map {|type, meal| "#{type}: #{meal}" }.join("\n")
     JSON({text: menu})
